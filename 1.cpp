@@ -26,11 +26,7 @@ int main(void)
   fout << bisection(0.1, 2.0, Delta, fun) <<"\t   ";
   fout << regulafalsi(0.1, 2.0, Delta, fun) << "\t         ";
   fout << newton_raphson(0.1, Delta, fun, deriv) << "\n";
-  // std::cout << "Iter Bisection" << N << "\t";
-  //N  = regulafalsi(1, 2, Delta, fun);
-  //std::cout << "Iter RegulaFalsi"  << N << "\t";
-  //N = newton_raphson(1, Delta, fun, deriv);
-  //std::cout << "Iter Newton" << N  << "\n";
+  
     }
   fout.close();
   return 0;
@@ -41,6 +37,7 @@ int bisection(double xl, double xu, double Delta, fptr f)
   double xr = xl;
   int N = 0;
   while(1) {
+    N++;
     xr=(xl+xu)/2;
     if (std::fabs(f(xr)) <= Delta) {
       break;
@@ -51,19 +48,19 @@ int bisection(double xl, double xu, double Delta, fptr f)
     else {
       xl = xr;
     }
-    N++;
+    
   }
 
   return N;
 }
 
-//Para Regulafalsi y Biseccion, N inicia con 1
 
 int regulafalsi(double xl, double xu, double Delta, fptr f)
 {
   double xr = xl;
-  int N = 1;
+  int N = 0;
   while(1) {
+    N++;
     xr = xu - (f(xu)*(xl-xu))/(f(xl) -f(xu));
     if (std::fabs(f(xr)) <= Delta) {
       break;
@@ -74,26 +71,14 @@ int regulafalsi(double xl, double xu, double Delta, fptr f)
     else {
       xl = xr;
     }
-    N++;
+    
   }
 
 
   return N;
 }
 
-/*double fixedpoint(double x0, double Delta, fptr f, fptr g)
-{
-  double xr = x0;
-  int N = 1;
-  while(1) {
-    if (std::fabs(f(xr)) <= Delta) {
-      break;
-    }
-    xr = g(xr);
-    N++;
-  }
-  return N;
-  }*/
+
 
 double fun(double x)
 {
@@ -119,7 +104,6 @@ int newton_raphson(double x0, double Delta, fptr f, fptr fderiv)
   return N;
 }
 
-//Para Newton Inicia con N=0
 
 double deriv(double x)
 {
